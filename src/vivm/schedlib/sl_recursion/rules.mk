@@ -1,0 +1,23 @@
+.PHONY: $(SL_REC_CLEAN) $(SL_REC_PURGE)
+
+include $(wildcard $(SL_REC_OBJ_DIR)/*.d)
+
+$(SL_REC_TARGET): $(P_SL_REC_OBJ) $(P_CMMN_OBJ)
+	$(CPP) $(LD_FLAGS) $(LD_SHARED_FLAGS) $(SL_REC_LD_PFLAGS) $(P_SL_REC_OBJ) $(P_CMMN_OBJ) -o $@ $(SL_REC_LD_SFLAGS)
+
+$(SL_REC_CLEAN):
+	$(RM) $(RM_FLAGS) $(SL_REC_TARGET)
+	$(RM) $(RM_FLAGS) $(P_SL_REC_OBJ) $(SL_REC_OBJ_DIR)/*.d
+
+$(SL_REC_PURGE): $(SL_REC_CLEAN) $(CMMN_CLEAN) $(LM_CLEAN)
+	$(RM) $(RM_FLAGS) $(SL_REC_TARGET)
+	$(RM) $(RM_FLAGS) $(P_SL_REC_OBJ) $(SL_REC_OBJ_DIR)/*.d
+
+$(SL_REC_OBJ_DIR)/%.o : $(SL_REC_DIR)/%.cpp $(SL_REC_DIR)/%.h
+	$(CPP) $(CPP_FLAGS) $(CXX_SHARED_FLAGS) $(SL_REC_CPP_OPT) $(SL_REC_CPP_INC_FLAGS) $< -o $@
+
+$(SL_REC_OBJ_DIR)/%.o : $(SL_REC_DIR)/%.cpp
+	$(CPP) $(CPP_FLAGS) $(CXX_SHARED_FLAGS) $(SL_REC_CPP_OPT) $(SL_REC_CPP_INC_FLAGS) $< -o $@
+
+include $(CMMN_DIR)/rules.mk
+

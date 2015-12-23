@@ -1,0 +1,6 @@
+pid=(`ps aux | grep memalloc | awk '{print $2}'`)
+for i in ${pid[@]}
+do
+    kill -9 $i
+done
+

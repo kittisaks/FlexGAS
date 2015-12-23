@@ -1,0 +1,8 @@
+pid=(`ps aux | grep nstcomp | awk '{print $2}'`)
+for i in ${pid[@]}
+do
+    kill -9 $i
+done
+
+sleep 8
+

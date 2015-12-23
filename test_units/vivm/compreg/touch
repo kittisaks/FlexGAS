@@ -1,0 +1,1 @@
+mpiexec -n 7 --hostfile hosts touch /home/ksivm/vCluster/test_units/vivm/compreg/compreg

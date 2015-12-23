@@ -1,0 +1,1 @@
+mpiexec -n 4 --hostfile hosts touch /home/ksivm/vCluster/test_units/vivm/nstcomp/nstcomp

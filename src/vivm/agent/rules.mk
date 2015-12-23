@@ -1,0 +1,24 @@
+.PHONY: $(AGENT_CLEAN) $(AGENT_PURGE)
+
+include $(wildcard $(AGENT_OBJ_DIR)/*.d)
+
+$(AGENT_TARGET): $(CH_TARGET) $(P_AGENT_OBJ) $(P_CMMN_OBJ)
+	$(CPP) $(LD_FLAGS) $(AGENT_LD_PFLAGS) $(P_AGENT_OBJ) $(P_CMMN_OBJ) -o $@ $(AGENT_LD_SFLAGS)
+
+$(AGENT_CLEAN):
+	$(RM) $(RM_FLAGS) $(AGENT_TARGET)
+	$(RM) $(RM_FLAGS) $(P_AGENT_OBJ) $(AGENT_OBJ_DIR)/*.d
+
+$(AGENT_PURGE): $(CMMN_CLEAN) $(CH_CLEAN) $(LM_CLEAN)
+	$(RM) $(RM_FLAGS) $(AGENT_TARGET)
+	$(RM) $(RM_FLAGS) $(P_AGENT_OBJ) $(AGENT_OBJ_DIR)/*.d
+
+$(AGENT_OBJ_DIR)/%.o : $(AGENT_DIR)/%.cpp $(AGENT_DIR)/%.h
+	$(CPP) $(CPP_FLAGS) $(CXX_SHARED_FLAGS) $(AGENT_CPP_OPT) $(AGENT_CPP_INC_FLAGS) $< -o $@
+
+$(AGENT_OBJ_DIR)/%.o : $(AGENT_DIR)/%.cpp
+	$(CPP) $(CPP_FLAGS) $(CXX_SHARED_FLAGS) $(AGENT_CPP_OPT) $(AGENT_CPP_INC_FLAGS) $< -o $@
+
+include $(CH_DIR)/rules.mk
+include $(CMMN_DIR)/rules.mk
+
